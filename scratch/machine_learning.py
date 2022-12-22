@@ -68,3 +68,8 @@ def f1_score(tp: int, fp: int, fn: int, tn: int) -> float:
 
     return 2 * p * r / (p + r)
 
+# Chap11.csv の値
+print(f"正解率_accuracy: {accuracy(30, 40, 100, 50)}")
+print(f"適合率_precision: {precision(30, 40, 100, 50)}")
+print(f"再現率_recall: {recall(30, 40, 100, 50)}")
+print(f"f1: {f1_score(30, 40, 100, 50)}")

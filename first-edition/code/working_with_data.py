@@ -35,7 +35,7 @@ def compare_two_distributions():
     plot_histogram(uniform, 10, "Uniform Histogram")
     plot_histogram(normal, 10, "Normal Histogram")
 
-def random_normal(): 
+def random_normal():
     """returns a random draw from a standard normal distribution"""
     return inverse_normal_cdf(random.random())
 
@@ -68,7 +68,7 @@ def make_scatterplot_matrix():
     # first, generate some random data
 
     num_points = 100
-    
+
     def random_row():
         row = [None, None, None, None]
         row[0] = random_normal()
@@ -199,7 +199,7 @@ def rescale(data_matrix):
     ignores columns with no deviation"""
     means, stdevs = scale(data_matrix)
 
-    def rescaled(i, j): 
+    def rescaled(i, j):
         if stdevs[j] > 0:
             return (data_matrix[i][j] - means[j]) / stdevs[j]
         else:
@@ -328,7 +328,7 @@ def direction(w):
 def directional_variance_i(x_i, w):
     """the variance of the row x_i in the direction w"""
     return dot(x_i, direction(w)) ** 2
-    
+
 def directional_variance(X, w):
     """the variance of the data in the direction w"""
     return sum(directional_variance_i(x_i, w) for x_i in X)
@@ -362,11 +362,11 @@ def project(v, w):
     """return the projection of v onto w"""
     coefficient = dot(v, w)
     return scalar_multiply(coefficient, w)
-    
+
 def remove_projection_from_vector(v, w):
     """projects v onto w and subtracts the result from v"""
     return vector_subtract(v, project(v, w))
-    
+
 def remove_projection(X, w):
     """for each row of X
     projects the row onto w, and subtracts the result from the row"""
@@ -378,14 +378,14 @@ def principal_component_analysis(X, num_components):
         component = first_principal_component(X)
         components.append(component)
         X = remove_projection(X, component)
-        
+
     return components
 
 def transform_vector(v, components):
     return [dot(v, w) for w in components]
-    
+
 def transform(X, components):
-    return [transform_vector(x_i, components) for x_i in X] 
+    return [transform_vector(x_i, components) for x_i in X]
 
 if __name__ == "__main__":
 
@@ -406,10 +406,10 @@ if __name__ == "__main__":
             print row
 
     print "stocks"
-    with open("stocks.txt", "rb") as f:
+    with open("im/stocks.txt", "rb") as f:
         reader = csv.DictReader(f, delimiter="\t")
         data = [parse_dict(row, { 'date' : dateutil.parser.parse,
-                                  'closing_price' : float }) 
+                                  'closing_price' : float })
                 for row in reader]
 
     max_aapl_price = max(row["closing_price"]
@@ -419,10 +419,10 @@ if __name__ == "__main__":
 
     # group rows by symbol
     by_symbol = defaultdict(list)
-    
+
     for row in data:
         by_symbol[row["symbol"]].append(row)
-    
+
     # use a dict comprehension to find the max for each symbol
     max_price_by_symbol = { symbol : max(row["closing_price"]
                             for row in grouped_rows)
